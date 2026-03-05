@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict e7z4XC8xUNaaCt0BgtvKs1MqPxxh01AalAuRLXuJhCAP9UA6pr6LhDHJpX19jrE
+\restrict 45pvJ8I0nHpUijFIxGFcjljYzBacXWMQstIYfAIjLOVrqrlcGrcCnFlHrUjBCH1
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -20,16 +20,24 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+SET SESSION AUTHORIZATION DEFAULT;
+
+ALTER TABLE public.auth_group DISABLE TRIGGER ALL;
 
 COPY public.auth_group (id, name) FROM stdin;
 \.
 
 
+ALTER TABLE public.auth_group ENABLE TRIGGER ALL;
+
 --
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.django_content_type DISABLE TRIGGER ALL;
 
 COPY public.django_content_type (id, app_label, model) FROM stdin;
 1	admin	logentry
@@ -59,9 +67,13 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 \.
 
 
+ALTER TABLE public.django_content_type ENABLE TRIGGER ALL;
+
 --
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.auth_permission DISABLE TRIGGER ALL;
 
 COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 1	Can add log entry	1	add_logentry
@@ -163,42 +175,62 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 \.
 
 
+ALTER TABLE public.auth_permission ENABLE TRIGGER ALL;
+
 --
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.auth_group_permissions DISABLE TRIGGER ALL;
 
 COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.auth_group_permissions ENABLE TRIGGER ALL;
+
 --
--- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.auth_user DISABLE TRIGGER ALL;
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
 1	pbkdf2_sha256$1000000$WDU6VKcycU15qK5eN1wY8i$kvugimiR8FuEOT8NE/WrO6PP9QRWnlXL5YmBmS5Mfyc=	2025-12-09 10:58:15.558618+03	t	kirill				t	t	2025-12-09 10:25:52.825497+03
 \.
 
 
+ALTER TABLE public.auth_user ENABLE TRIGGER ALL;
+
 --
--- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.auth_user_groups DISABLE TRIGGER ALL;
 
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.auth_user_groups ENABLE TRIGGER ALL;
+
 --
--- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.auth_user_user_permissions DISABLE TRIGGER ALL;
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.auth_user_user_permissions ENABLE TRIGGER ALL;
+
 --
--- Data for Name: countries; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: countries; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.countries DISABLE TRIGGER ALL;
 
 COPY public.countries (id, country_name) FROM stdin;
 1	CIS
@@ -234,17 +266,25 @@ COPY public.countries (id, country_name) FROM stdin;
 \.
 
 
+ALTER TABLE public.countries ENABLE TRIGGER ALL;
+
 --
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.django_admin_log DISABLE TRIGGER ALL;
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.django_admin_log ENABLE TRIGGER ALL;
+
 --
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.django_migrations DISABLE TRIGGER ALL;
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
 1	contenttypes	0001_initial	2025-12-09 02:49:19.841609+03
@@ -269,18 +309,26 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 \.
 
 
+ALTER TABLE public.django_migrations ENABLE TRIGGER ALL;
+
 --
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: esports_admin
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.django_session DISABLE TRIGGER ALL;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 g5iqbxvyktqib7u137ob95vn6rexm5h3	.eJxVjssOwiAQRf-FtSE8Si0u3fsNDcwMFm2KAboy_ru06UK399x7Zt5sdGudxrVQHiOyC5Ps9Jt5B09aNoAPt9wTh7TUHD3fKvyghd8S0nw9un-CyZWprQ3ZANgrpQbdE2qwne3RQND6DEpjJ6QJXnrbGWxICBiEMAakhiC9GZp01-U0U9OlF2VXU25xLPs1WmoEV6m9WvNKny-LLUh4:1vSskG:jy2AP_nLMQm2L2G7VLqzk0TocCq-e21HmxxxfpqwtmU	2025-12-23 11:06:52.796425+03
 \.
 
 
+ALTER TABLE public.django_session ENABLE TRIGGER ALL;
+
 --
--- Data for Name: game_genres; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: game_genres; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.game_genres DISABLE TRIGGER ALL;
 
 COPY public.game_genres (id, genre_name) FROM stdin;
 1	FPS
@@ -291,9 +339,13 @@ COPY public.game_genres (id, genre_name) FROM stdin;
 \.
 
 
+ALTER TABLE public.game_genres ENABLE TRIGGER ALL;
+
 --
--- Data for Name: games_list; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: games_list; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.games_list DISABLE TRIGGER ALL;
 
 COPY public.games_list (id, name, has_heroes, has_towers) FROM stdin;
 1	Counter-Strike 2	f	f
@@ -301,9 +353,13 @@ COPY public.games_list (id, name, has_heroes, has_towers) FROM stdin;
 \.
 
 
+ALTER TABLE public.games_list ENABLE TRIGGER ALL;
+
 --
--- Data for Name: game_genres_link; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: game_genres_link; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.game_genres_link DISABLE TRIGGER ALL;
 
 COPY public.game_genres_link (game_id, genre_id) FROM stdin;
 1	1
@@ -311,9 +367,13 @@ COPY public.game_genres_link (game_id, genre_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.game_genres_link ENABLE TRIGGER ALL;
+
 --
--- Data for Name: maps; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: maps; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.maps DISABLE TRIGGER ALL;
 
 COPY public.maps (id, name, game_id) FROM stdin;
 1	Dust II	1
@@ -327,9 +387,13 @@ COPY public.maps (id, name, game_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.maps ENABLE TRIGGER ALL;
+
 --
--- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.players DISABLE TRIGGER ALL;
 
 COPY public.players (id, nickname, full_name, birthdate, role, total_winnings, country_id, status) FROM stdin;
 1	NiKo	Nikola Kovač	1997-02-16	Rifler	1777583	21	active
@@ -532,9 +596,13 @@ COPY public.players (id, nickname, full_name, birthdate, role, total_winnings, c
 \.
 
 
+ALTER TABLE public.players ENABLE TRIGGER ALL;
+
 --
--- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.teams DISABLE TRIGGER ALL;
 
 COPY public.teams (id, name, created_at, disbanded_at, coach, manager, total_earnings, game_id, captain_id) FROM stdin;
 1	Team Falcons	2020-11-29	\N	zonic, trochu	Next, Mattéo Paganin, Xavier Roussac	1221340	1	\N
@@ -581,9 +649,13 @@ COPY public.teams (id, name, created_at, disbanded_at, coach, manager, total_ear
 \.
 
 
+ALTER TABLE public.teams ENABLE TRIGGER ALL;
+
 --
--- Data for Name: tournaments; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: tournaments; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.tournaments DISABLE TRIGGER ALL;
 
 COPY public.tournaments (id, name, tier, prize_pool, location, max_number_of_teams, start_date, end_date, winner_team_id, game_id) FROM stdin;
 1	The International 2025	The International	2881791	Germany, Hamburg	16	2025-09-04	2025-09-14	27	2
@@ -593,9 +665,13 @@ COPY public.tournaments (id, name, tier, prize_pool, location, max_number_of_tea
 \.
 
 
+ALTER TABLE public.tournaments ENABLE TRIGGER ALL;
+
 --
--- Data for Name: tournament_stages; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: tournament_stages; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.tournament_stages DISABLE TRIGGER ALL;
 
 COPY public.tournament_stages (id, tournament_id, name, stage_type, bracket_type, stage_order) FROM stdin;
 1	2	Stage 1	group	no_type	1
@@ -616,9 +692,13 @@ COPY public.tournament_stages (id, tournament_id, name, stage_type, bracket_type
 \.
 
 
+ALTER TABLE public.tournament_stages ENABLE TRIGGER ALL;
+
 --
--- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.matches DISABLE TRIGGER ALL;
 
 COPY public.matches (id, stage_id, team1_id, team2_id, winner_team_id, match_date) FROM stdin;
 1	3	8	6	6	2025-10-01
@@ -752,9 +832,13 @@ COPY public.matches (id, stage_id, team1_id, team2_id, winner_team_id, match_dat
 \.
 
 
+ALTER TABLE public.matches ENABLE TRIGGER ALL;
+
 --
--- Data for Name: games; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: games; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.games DISABLE TRIGGER ALL;
 
 COPY public.games (id, match_id, game_number, map_id, team1_score, team2_score, winner_team_id) FROM stdin;
 1	1	1	2	9	13	6
@@ -900,9 +984,13 @@ COPY public.games (id, match_id, game_number, map_id, team1_score, team2_score, 
 \.
 
 
+ALTER TABLE public.games ENABLE TRIGGER ALL;
+
 --
--- Data for Name: heroes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: heroes; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.heroes DISABLE TRIGGER ALL;
 
 COPY public.heroes (id, name, game_id) FROM stdin;
 1	Abaddon	2
@@ -1034,17 +1122,25 @@ COPY public.heroes (id, name, game_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.heroes ENABLE TRIGGER ALL;
+
 --
--- Data for Name: matches_history; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: matches_history; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.matches_history DISABLE TRIGGER ALL;
 
 COPY public.matches_history (history_id, operation_type, operation_timestamp, operation_user, old_id, old_stage_id, old_team1_id, old_team2_id, old_winner_team_id, old_match_date, new_id, new_stage_id, new_team1_id, new_team2_id, new_winner_team_id, new_match_date) FROM stdin;
 \.
 
 
+ALTER TABLE public.matches_history ENABLE TRIGGER ALL;
+
 --
--- Data for Name: player_game_stats; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: player_game_stats; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.player_game_stats DISABLE TRIGGER ALL;
 
 COPY public.player_game_stats (id, game_id, player_id, hero_id, kills, deaths, assists) FROM stdin;
 1	1	36	\N	16	18	4
@@ -1600,9 +1696,13 @@ COPY public.player_game_stats (id, game_id, player_id, hero_id, kills, deaths, a
 \.
 
 
+ALTER TABLE public.player_game_stats ENABLE TRIGGER ALL;
+
 --
--- Data for Name: player_teams; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: player_teams; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.player_teams DISABLE TRIGGER ALL;
 
 COPY public.player_teams (player_id, team_id, role) FROM stdin;
 1	1	\N
@@ -1803,9 +1903,13 @@ COPY public.player_teams (player_id, team_id, role) FROM stdin;
 \.
 
 
+ALTER TABLE public.player_teams ENABLE TRIGGER ALL;
+
 --
--- Data for Name: players_history; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: players_history; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.players_history DISABLE TRIGGER ALL;
 
 COPY public.players_history (history_id, operation_type, operation_timestamp, operation_user, old_id, old_nickname, old_full_name, old_birthdate, old_country_id, old_role, old_total_winnings, old_status, new_id, new_nickname, new_full_name, new_birthdate, new_country_id, new_role, new_total_winnings, new_status) FROM stdin;
 1	INSERT	2025-12-09 00:08:30.77702	esports_operator	\N	\N	\N	\N	\N	\N	\N	\N	196	test	test	1111-10-10	17	test	100	active
@@ -1815,9 +1919,13 @@ COPY public.players_history (history_id, operation_type, operation_timestamp, op
 \.
 
 
+ALTER TABLE public.players_history ENABLE TRIGGER ALL;
+
 --
--- Data for Name: team_locations; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: team_locations; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.team_locations DISABLE TRIGGER ALL;
 
 COPY public.team_locations (team_id, country_id) FROM stdin;
 1	6
@@ -1874,9 +1982,13 @@ COPY public.team_locations (team_id, country_id) FROM stdin;
 \.
 
 
+ALTER TABLE public.team_locations ENABLE TRIGGER ALL;
+
 --
--- Data for Name: teams_history; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: teams_history; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.teams_history DISABLE TRIGGER ALL;
 
 COPY public.teams_history (history_id, operation_type, operation_timestamp, operation_user, old_id, old_name, old_created_at, old_disbanded_at, old_coach, old_manager, old_total_earnings, old_game_id, old_captain_id, new_id, new_name, new_created_at, new_disbanded_at, new_coach, new_manager, new_total_earnings, new_game_id, new_captain_id) FROM stdin;
 1	INSERT	2025-12-09 00:09:21.816375	esports_operator	\N	\N	\N	\N	\N	\N	\N	\N	\N	41	test	1111-10-10	\N	test	test	10	1	44
@@ -1885,9 +1997,13 @@ COPY public.teams_history (history_id, operation_type, operation_timestamp, oper
 \.
 
 
+ALTER TABLE public.teams_history ENABLE TRIGGER ALL;
+
 --
--- Data for Name: tournament_participants; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: tournament_participants; Type: TABLE DATA; Schema: public; Owner: -
 --
+
+ALTER TABLE public.tournament_participants DISABLE TRIGGER ALL;
 
 COPY public.tournament_participants (id, tournament_id, team_id, place, earnings) FROM stdin;
 1	1	26	1	1224732
@@ -1910,176 +2026,178 @@ COPY public.tournament_participants (id, tournament_id, team_id, place, earnings
 \.
 
 
+ALTER TABLE public.tournament_participants ENABLE TRIGGER ALL;
+
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_permission_id_seq', 96, true);
 
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_user_id_seq', 1, true);
 
 
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
--- Name: countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.countries_id_seq', 30, true);
 
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.django_content_type_id_seq', 24, true);
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: esports_admin
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.django_migrations_id_seq', 19, true);
 
 
 --
--- Name: game_genres_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: game_genres_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.game_genres_id_seq', 5, true);
 
 
 --
--- Name: games_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: games_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.games_id_seq', 140, true);
 
 
 --
--- Name: games_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: games_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.games_list_id_seq', 2, true);
 
 
 --
--- Name: heroes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: heroes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.heroes_id_seq', 126, true);
 
 
 --
--- Name: maps_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: maps_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.maps_id_seq', 8, true);
 
 
 --
--- Name: matches_history_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: matches_history_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.matches_history_history_id_seq', 1, false);
 
 
 --
--- Name: matches_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: matches_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.matches_id_seq', 128, true);
 
 
 --
--- Name: player_game_stats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: player_game_stats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.player_game_stats_id_seq', 550, true);
 
 
 --
--- Name: players_history_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: players_history_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.players_history_history_id_seq', 36, true);
 
 
 --
--- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.players_id_seq', 198, true);
 
 
 --
--- Name: teams_history_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: teams_history_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.teams_history_history_id_seq', 36, true);
 
 
 --
--- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.teams_id_seq', 43, true);
 
 
 --
--- Name: tournament_participants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: tournament_participants_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.tournament_participants_id_seq', 17, true);
 
 
 --
--- Name: tournament_stages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: tournament_stages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.tournament_stages_id_seq', 15, true);
 
 
 --
--- Name: tournaments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: tournaments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public.tournaments_id_seq', 5, true);
@@ -2089,5 +2207,5 @@ SELECT pg_catalog.setval('public.tournaments_id_seq', 5, true);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict e7z4XC8xUNaaCt0BgtvKs1MqPxxh01AalAuRLXuJhCAP9UA6pr6LhDHJpX19jrE
+\unrestrict 45pvJ8I0nHpUijFIxGFcjljYzBacXWMQstIYfAIjLOVrqrlcGrcCnFlHrUjBCH1
 
