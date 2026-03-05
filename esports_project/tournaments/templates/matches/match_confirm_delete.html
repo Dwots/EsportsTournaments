@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить матч? - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🗑️ Удалить матч?</h1>
+
+    <p style="font-size:16px; margin:20px 0;">
+        <strong>{{ match.stage.tournament.name }}</strong> — {{ match.stage.name }}<br>
+        {{ match.team1.name|default:"TBD" }} vs {{ match.team2.name|default:"TBD" }} 
+        ({{ match.match_date|default:"дата не указана" }})
+    </p>
+    <p style="color:#888;">Это действие нельзя отменить.</p>
+
+    <form method="post" style="margin-top:20px;">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="btn btn-danger">🗑️ Да, удалить</button>
+            <a href="{% url 'tournament_detail' match.stage.tournament.pk %}"
+               class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

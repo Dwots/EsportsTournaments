@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - Esports DB{% endblock %}
+
+{% block content %}
+<h1>🎮 Esports Tournaments Database</h1>
+
+<div class="stats">
+    <div class="stat-box">
+        <h2>{{ players_count }}</h2>
+        <p>Игроков</p>
+    </div>
+    <div class="stat-box">
+        <h2>{{ teams_count }}</h2>
+        <p>Команд</p>
+    </div>
+    <div class="stat-box">
+        <h2>{{ tournaments_count }}</h2>
+        <p>Турниров</p>
+    </div>
+</div>
+
+<h2>Последние турниры</h2>
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Игра</th>
+        <th>Призовой фонд</th>
+        <th>Победитель</th>
+        <th>Дата</th>
+    </tr>
+    {% for t in tournaments %}
+    <tr>
+        <td><a href="{% url 'tournament_detail' t.pk %}">{{ t.name }}</a></td>
+        <td>{{ t.game.name|default:"-" }}</td>
+        <td>${{ t.prize_pool|default:0 }}</td>
+        <td>{{ t.winner_team.name|default:"TBD" }}</td>
+        <td>{{ t.start_date|default:"-" }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Нет турниров</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ title }}</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <div style="color: #dc3545; font-size: 12px; margin-top: 5px;">
+                    {{ field.errors|join:", " }}
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        
+        <div class="actions">
+            <button type="submit" class="btn btn-success">💾 Сохранить</button>
+            <a href="{% url 'player_list' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Игроки - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card-header">
+    <h1>👤 Игроки</h1>
+    {% if is_operator %}
+        <a href="{% url 'player_create' %}" class="btn btn-success">+ Добавить игрока</a>
+    {% endif %}
+</div>
+
+<form method="get" class="search-box">
+    <input type="text" name="search" class="form-input" 
+           placeholder="Поиск по никнейму..." value="{{ search }}">
+    <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
+<table>
+    <tr>
+        <th>Никнейм</th>
+        <th>Имя</th>
+        <th>Команда</th>
+        <th>Роль</th>
+        <th>Заработок</th>
+        {% if is_operator %}
+            <th>Действия</th>
+        {% endif %}
+    </tr>
+    {% for item in players_with_teams %}
+    <tr>
+        <td><a href="{% url 'player_detail' item.player.pk %}"><strong>{{ item.player.nickname }}</strong></a></td>
+        <td>{{ item.player.full_name|default:"-" }}</td>
+        <td>
+            {% if item.team %}
+                <a href="{% url 'team_detail' item.team.pk %}">{{ item.team.name }}</a>
+            {% else %}
+                Free Agent
+            {% endif %}
+        </td>
+        <td>{{ item.player.role|default:"-" }}</td>
+        <td>${{ item.player.total_winnings|default:0 }}</td>
+        {% if is_operator %}
+            <td>
+                <a href="{% url 'player_edit' item.player.pk %}" class="btn btn-warning">✏️</a>
+                {% if is_admin %}
+                    <a href="{% url 'player_delete' item.player.pk %}" class="btn btn-danger">🗑️</a>
+                {% endif %}
+            </td>
+        {% endif %}
+    </tr>
+    {% empty %}
+    <tr><td colspan="{% if is_operator %}6{% else %}5{% endif %}">Игроки не найдены</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

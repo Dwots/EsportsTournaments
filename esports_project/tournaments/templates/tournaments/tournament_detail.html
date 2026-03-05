@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ tournament.name }} - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>{{ tournament.name }}</h1>
+        {% if is_operator %}
+            <div>
+                <a href="{% url 'tournament_edit' tournament.pk %}" class="btn btn-warning">✏️ Редактировать</a>
+                {% if is_admin %}
+                    <a href="{% url 'tournament_delete' tournament.pk %}" class="btn btn-danger">🗑️ Удалить</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <table>
+        <tr><th>Игра</th><td>{{ tournament.game.name|default:"-" }}</td></tr>
+        <tr><th>Tier</th><td>{{ tournament.tier|default:"-" }}</td></tr>
+        <tr><th>Призовой фонд</th><td>${{ tournament.prize_pool|default:0 }}</td></tr>
+        <tr><th>Локация</th><td>{{ tournament.location|default:"-" }}</td></tr>
+        <tr><th>Макс. команд</th><td>{{ tournament.max_number_of_teams|default:"-" }}</td></tr>
+        <tr><th>Даты</th><td>{{ tournament.start_date|default:"-" }} — {{ tournament.end_date|default:"-" }}</td></tr>
+        <tr><th>Победитель</th>
+            <td>
+            {% if tournament.winner_team %}
+                <a href="{% url 'team_detail' tournament.winner_team.pk %}">{{ tournament.winner_team.name }}</a>
+            {% else %}
+                TBD
+            {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+{% if stages_with_matches %}
+    <h2>📋 Этапы турнира</h2>
+
+    {% for item in stages_with_matches %}
+        <div class="card">
+            <div class="card-header">
+                <h3>
+                    {% if item.stage.stage_type == 'group' %}
+                        📊
+                    {% else %}
+                        🏆
+                    {% endif %}
+                    {{ item.stage.name }}
+                    {% if item.stage.bracket_type and item.stage.bracket_type != 'no_type' %}
+                        <span style="font-size: 12px; color:#aaa;">
+                            ({{ item.stage.bracket_type }})
+                        </span>
+                    {% endif %}
+                    <!-- prettier-ignore -->
+                    <span style="font-size: 11px; padding: 3px 8px; background: {% if item.stage.stage_type == 'group' %}#2196F3{% else %}#4CAF50{% endif %}; border-radius: 10px; margin-left: 10px;">
+                        {{ item.stage.stage_type }}
+                    </span>
+                </h3>
+                {% if is_operator %}
+                    <a href="{% url 'match_create' %}?stage={{ item.stage.id }}" 
+                       class="btn btn-success">+ Добавить матч</a>
+                {% endif %}
+            </div>
+
+            {% if item.matches %}
+                <table>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Команда 1</th>
+                        <th>Счёт</th>
+                        <th>Команда 2</th>
+                        <th>Победитель</th>
+                        {% if is_operator %}
+                            <th>Действия</th>
+                        {% endif %}
+                    </tr>
+                    {% for m in item.matches %}
+                    <tr>
+                        <td>{{ m.match.match_date|default:"-" }}</td>
+                        <td>
+                            {% if m.match.team1 %}
+                                <a href="{% url 'team_detail' m.match.team1.pk %}">{{ m.match.team1.name }}</a>
+                            {% else %}-{% endif %}
+                        </td>
+                        <td style="text-align: center; font-weight: bold; font-size: 16px;">
+                            <a href="{% url 'match_detail' m.match.pk %}" style="color: #00d9ff;">
+                                {{ m.score1 }} : {{ m.score2 }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if m.match.team2 %}
+                                <a href="{% url 'team_detail' m.match.team2.pk %}">{{ m.match.team2.name }}</a>
+                            {% else %}-{% endif %}
+                        </td>
+                        <td>
+                            {% if m.match.winner_team %}
+                                <span style="color: #28a745;">
+                                    🏆 <a href="{% url 'team_detail' m.match.winner_team.pk %}">
+                                        {{ m.match.winner_team.name }}
+                                    </a>
+                                </span>
+                            {% else %}
+                                <span style="color: #888;">TBD</span>
+                            {% endif %}
+                        </td>
+                        {% if is_operator %}
+                            <td>
+                                <a href="{% url 'match_edit' m.match.pk %}" class="btn btn-warning">✏️</a>
+                                {% if is_admin %}
+                                    <a href="{% url 'match_delete' m.match.pk %}" class="btn btn-danger">🗑️</a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p style="color:#888;">Матчей на этой стадии пока нет.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p style="margin-top:20px; color:#888;">Для этого турнира этапы не заданы.</p>
+{% endif %}
+
+<a href="{% url 'tournament_list' %}" class="btn btn-secondary">← Назад к списку</a>
+{% endblock %}

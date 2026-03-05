@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ team.name }} - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>{{ team.name }}</h1>
+        {% if is_operator %}
+            <div>
+                <a href="{% url 'team_edit' team.pk %}" class="btn btn-warning">✏️ Редактировать</a>
+                {% if is_admin %}
+                    <a href="{% url 'team_delete' team.pk %}" class="btn btn-danger">🗑️ Удалить</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <table>
+        <tr><th>Игра</th><td>{{ team.game.name|default:"-" }}</td></tr>
+        <tr><th>Тренер</th><td>{{ team.coach|default:"-" }}</td></tr>
+        <tr><th>Менеджер</th><td>{{ team.manager|default:"-" }}</td></tr>
+        <tr><th>Заработок</th><td>${{ team.total_earnings|default:0 }}</td></tr>
+        <tr><th>Создана</th><td>{{ team.created_at|default:"-" }}</td></tr>
+    </table>
+</div>
+
+<div class="card">
+    <h2>Игроки команды</h2>
+    <table>
+        <tr>
+            <th>Никнейм</th>
+            <th>Роль</th>
+            <th>Заработок</th>
+        </tr>
+        {% for p in players %}
+        <tr>
+            <td><a href="{% url 'player_detail' p.id %}">{{ p.nickname }}</a></td>
+            <td>{{ p.role|default:"-" }}</td>
+            <td>${{ p.total_winnings|default:0 }}</td>
+        </tr>
+        {% empty %} 
+        <tr><td colspan="3">Нет игроков</td></tr>
+        {% endfor %}
+    </table>
+
+    {% if is_operator and add_player_form %}
+        <h3 style="margin-top: 30px;">Добавить игрока в команду</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ add_player_form.player.id_for_label }}">
+                    {{ add_player_form.player.label }}
+                </label>
+                {{ add_player_form.player }}
+                {% if add_player_form.player.errors %}
+                    <div style="color: #dc3545; font-size: 12px; margin-top: 5px;">
+                        {{ add_player_form.player.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ add_player_form.role.id_for_label }}">
+                    {{ add_player_form.role.label }}
+                </label>
+                {{ add_player_form.role }}
+                {% if add_player_form.role.errors %}
+                    <div style="color: #dc3545; font-size: 12px; margin-top: 5px;">
+                        {{ add_player_form.role.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-success">➕ Добавить</button>
+        </form>
+    {% endif %}
+</div>
+
+<a href="{% url 'team_list' %}" class="btn btn-secondary">← Назад к списку</a>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ player.nickname }} - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>{{ player.nickname }}</h1>
+        {% if is_operator %}
+            <div class="actions">
+                <a href="{% url 'player_edit' player.pk %}" class="btn btn-warning">✏️ Редактировать</a>
+                {% if is_admin %}
+                    <a href="{% url 'player_delete' player.pk %}" class="btn btn-danger">🗑️ Удалить</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <table>
+        <tr><th>Полное имя</th><td>{{ player.full_name|default:"-" }}</td></tr>
+        <tr><th>Никнейм</th><td>{{ player.nickname }}</td></tr>
+        <tr><th>Дата рождения</th><td>{{ player.birthdate|default:"-" }}</td></tr>
+        <tr><th>Страна</th><td>{{ player.country.country_name|default:"-" }}</td></tr>
+        <tr><th>Команда</th><td>
+            {% if team %}
+                <a href="{% url 'team_detail' team.pk %}">{{ team.name }}</a>
+            {% else %}
+                Free Agent
+            {% endif %}
+        </td></tr>
+        <tr><th>Роль</th><td>{{ player.role|default:"-" }}</td></tr>
+        <tr><th>Заработок</th><td>${{ player.total_winnings|default:0 }}</td></tr>
+        <tr><th>Статус</th><td>
+            {% if player.status == 'active' %}
+                <span style="color: #28a745;">● Active</span>
+            {% else %}
+                <span style="color: #6c757d;">○ Inactive</span>
+            {% endif %}
+        </td></tr>
+    </table>
+</div>
+
+{% if stats %}
+<div class="card">
+    <h2>📊 Последняя статистика</h2>
+    <table>
+        <tr>
+            <th>Игра</th>
+            <th>Герой</th>
+            <th>K/D/A</th>
+            <th>KDA</th>
+        </tr>
+        {% for s in stats %}
+        <tr>
+            <td>Game #{{ s.game.game_number }}</td>
+            <td>{{ s.hero.name|default:"-" }}</td>
+            <td>{{ s.kills }}/{{ s.deaths }}/{{ s.assists }}</td>
+            <td>{{ s.kda }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+
+<a href="{% url 'player_list' %}" class="btn btn-secondary">← Назад к списку</a>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ match }} - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>🎮 {{ match.team1.name|default:"TBD" }} vs {{ match.team2.name|default:"TBD" }}</h1>
+        {% if is_operator %}
+            <div class="actions">
+                <a href="{% url 'match_edit' match.pk %}" class="btn btn-warning">✏️ Редактировать</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <table>
+        <tr><th>Турнир</th><td><a href="{% url 'tournament_detail' match.stage.tournament.pk %}">{{ match.stage.tournament.name }}</a></td></tr>
+        <tr><th>Этап</th><td>{{ match.stage.name }} ({{ match.stage.stage_type }})</td></tr>
+        <tr><th>Дата</th><td>{{ match.match_date|default:"-" }}</td></tr>
+        <tr><th>Победитель</th><td>
+            {% if match.winner_team %}
+                <span style="color: #28a745;">🏆 {{ match.winner_team.name }}</span>
+            {% else %}
+                <span style="color: #888;">TBD</span>
+            {% endif %}
+        </td></tr>
+    </table>
+</div>
+
+<h2>🗺️ Игры матча</h2>
+
+{% if games_with_stats %}
+    {% for item in games_with_stats %}
+    <div class="card">
+        <h3>
+            Game {{ item.game.game_number }}: {{ item.game.map.name|default:"Unknown Map" }}
+            <span style="font-size: 14px; color: #888;">
+                ({{ item.game.team1_score }} - {{ item.game.team2_score }})
+            </span>
+            {% if item.game.winner_team %}
+                <span style="color: #28a745; font-size: 14px;">
+                    → {{ item.game.winner_team.name }}
+                </span>
+            {% endif %}
+        </h3>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <!-- Team 1 Stats -->
+            <div style="flex: 1; min-width: 300px;">
+                <h4 style="color: #00d9ff;">{{ match.team1.name|default:"Team 1" }}</h4>
+                {% if item.team1_stats %}
+                <table>
+                    <tr>
+                        <th>Игрок</th>
+                        <th>Герой</th>
+                        <th>K/D/A</th>
+                        <th>KDA</th>
+                    </tr>
+                    {% for s in item.team1_stats %}
+                    <tr>
+                        <td><a href="{% url 'player_detail' s.player.pk %}">{{ s.player.nickname }}</a></td>
+                        <td>{{ s.hero.name|default:"-" }}</td>
+                        <td>{{ s.kills }}/{{ s.deaths }}/{{ s.assists }}</td>
+                        <td>{{ s.kda }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <p style="color: #888;">Нет статистики</p>
+                {% endif %}
+            </div>
+            
+            <!-- Team 2 Stats -->
+            <div style="flex: 1; min-width: 300px;">
+                <h4 style="color: #ff6b6b;">{{ match.team2.name|default:"Team 2" }}</h4>
+                {% if item.team2_stats %}
+                <table>
+                    <tr>
+                        <th>Игрок</th>
+                        <th>Герой</th>
+                        <th>K/D/A</th>
+                        <th>KDA</th>
+                    </tr>
+                    {% for s in item.team2_stats %}
+                    <tr>
+                        <td><a href="{% url 'player_detail' s.player.pk %}">{{ s.player.nickname }}</a></td>
+                        <td>{{ s.hero.name|default:"-" }}</td>
+                        <td>{{ s.kills }}/{{ s.deaths }}/{{ s.assists }}</td>
+                        <td>{{ s.kda }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <p style="color: #888;">Нет статистики</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p style="color: #888;">Игры матча ещё не добавлены.</p>
+{% endif %}
+
+<a href="{% url 'tournament_detail' match.stage.tournament.pk %}" class="btn btn-secondary">← Назад к турниру</a>
+{% endblock %}

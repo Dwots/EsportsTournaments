@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🏟️ {{ title }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="form-errors" style="
+                background: rgba(220, 53, 69, 0.1);
+                border: 1px solid #dc3545;
+                border-radius: 8px;
+                padding: 15px 20px;
+                margin-bottom: 20px;
+            ">
+                <strong style="color: #dc3545;">⚠️ Ошибка:</strong>
+                <ul style="margin: 10px 0 0 20px; color: #dc3545;">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div style="color: #dc3545; font-size: 12px; margin-top: 5px;">
+                        {{ field.errors|join:", " }}
+                    </div>
+                {% endif %}
+                {% if field.name == 'winner_team' %}
+                    <small style="color: #888;">Оставьте пустым, если матч ещё не сыгран</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="actions">
+            <button type="submit" class="btn btn-success">💾 Сохранить</button>
+            {% if match and match.stage %}
+                <a href="{% url 'tournament_detail' match.stage.tournament.pk %}" class="btn btn-secondary">Отмена</a>
+            {% else %}
+                <a href="{% url 'tournament_list' %}" class="btn btn-secondary">Отмена</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

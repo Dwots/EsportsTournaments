@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить {{ player.nickname }}? - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🗑️ Удалить игрока?</h1>
+    
+    <p style="font-size: 18px; margin: 20px 0;">
+        Вы уверены, что хотите удалить игрока <strong>{{ player.nickname }}</strong>?
+    </p>
+    <p style="color: #888;">Это действие нельзя отменить.</p>
+    
+    <form method="post" style="margin-top: 30px;">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="btn btn-danger">🗑️ Да, удалить</button>
+            <a href="{% url 'player_detail' player.pk %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

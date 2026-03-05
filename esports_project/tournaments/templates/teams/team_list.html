@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Команды - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card-header">
+    <h1>🏆 Команды</h1>
+    {% if is_operator %}
+        <a href="{% url 'team_create' %}" class="btn btn-success">+ Добавить команду</a>
+    {% endif %}
+</div>
+
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Игра</th>
+        <th>Тренер</th>
+        <th>Заработок</th>
+        {% if is_operator %}
+            <th>Действия</th>
+        {% endif %}
+    </tr>
+    {% for team in teams %}
+    <tr>
+        <td><a href="{% url 'team_detail' team.pk %}"><strong>{{ team.name }}</strong></a></td>
+        <td>{{ team.game.name|default:"-" }}</td>
+        <td>{{ team.coach }}</td>
+        <td>${{ team.total_earnings|default:0 }}</td>
+        {% if is_operator %}
+            <td>
+                <a href="{% url 'team_edit' team.pk %}" class="btn btn-warning">✏️</a>
+                {% if is_admin %}
+                    <a href="{% url 'team_delete' team.pk %}" class="btn btn-danger">🗑️</a>
+                {% endif %}
+            </td>
+        {% endif %}
+    </tr>
+    {% empty %}
+    <tr><td colspan="{% if is_operator %}5{% else %}4{% endif %}">Нет команд</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

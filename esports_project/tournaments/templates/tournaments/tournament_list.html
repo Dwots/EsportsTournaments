@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Турниры - Esports DB{% endblock %}
+
+{% block content %}
+<div class="card-header">
+    <h1>🏆 Турниры</h1>
+    {% if is_operator %}
+        <a href="{% url 'tournament_create' %}" class="btn btn-success">+ Добавить турнир</a>
+    {% endif %}
+</div>
+
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Игра</th>
+        <th>Tier</th>
+        <th>Призовой фонд</th>
+        <th>Победитель</th>
+        <th>Даты</th>
+        {% if is_operator %}
+            <th>Действия</th>
+        {% endif %}
+    </tr>
+    {% for t in tournaments %}
+    <tr>
+        <td><a href="{% url 'tournament_detail' t.pk %}"><strong>{{ t.name }}</strong></a></td>
+        <td>{{ t.game.name|default:"-" }}</td>
+        <td>{{ t.tier|default:"-" }}</td>
+        <td>${{ t.prize_pool|default:0 }}</td>
+        <td>
+            {% if t.winner_team %}
+                <a href="{% url 'team_detail' t.winner_team.pk %}">{{ t.winner_team.name }}</a>
+            {% else %}
+                TBD
+            {% endif %}
+        </td>
+        <td>{{ t.start_date|default:"-" }} — {{ t.end_date|default:"-" }}</td>
+        {% if is_operator %}
+            <td>
+                <a href="{% url 'tournament_edit' t.pk %}" class="btn btn-warning">✏️</a>
+                {% if is_admin %}
+                    <a href="{% url 'tournament_delete' t.pk %}" class="btn btn-danger">🗑️</a>
+                {% endif %}
+            </td>
+        {% endif %}
+    </tr>
+    {% empty %}
+    <tr><td colspan="{% if is_operator %}7{% else %}6{% endif %}">Нет турниров</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
