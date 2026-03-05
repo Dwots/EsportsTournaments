@@ -101,35 +101,30 @@ DB_HOST=127.0.0.1
 DB_PORT=5432
 ```
 
-**Вариант Б: Безопасный запуск (ролевая модель)**
+#### Вариант Б: Безопасный запуск (ролевая модель)
 
-В базе данных спроектирована ролевая модель (RBAC) с тремя уровнями доступа:
-- `esports_admin` — полные права (Django подключается через него)
-- `esports_operator` — чтение + ограниченное редактирование
-- `esports_client` — только чтение (для аналитики)
+В базе данных реализована ролевая модель доступа (RBAC) с тремя уровнями:
+- `administrator` / `esports_admin` — полные права на все таблицы
+- `operator` / `esports_operator` — чтение всех таблиц + редактирование матчей, игроков, команд
+- `client` / `esports_client` — только чтение
 
-Роли и права создаются автоматически при загрузке `01_schema.sql`.
+Группы ролей и права на таблицы уже прописаны в `01_schema.sql`
+и применятся автоматически при загрузке схемы.
 
-Если вы хотите использовать ролевую модель, создайте пользователей:
+Однако **пользователей для входа** нужно создать вручную,
+так как `pg_dump` одной базы данных не сохраняет глобальных пользователей PostgreSQL:
 
 ```bash
-psql -U postgres -d esports_tournaments << 'EOF'
+psql -U postgres << 'EOF'
+-- Создаём пользователей
 CREATE USER esports_admin WITH PASSWORD 'esports_admin_pass';
 CREATE USER esports_operator WITH PASSWORD 'esports_operator_pass';
 CREATE USER esports_client WITH PASSWORD 'esports_client_pass';
 
--- Полные права для админа
-GRANT ALL ON ALL TABLES IN SCHEMA public TO esports_admin;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO esports_admin;
-
--- Только чтение для оператора и клиента
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO esports_operator;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO esports_client;
-
--- Автоматические права на будущие таблицы
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO esports_admin;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO esports_operator;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO esports_client;
+-- Привязываем их к группам ролей (наследование прав)
+GRANT administrator TO esports_admin;
+GRANT operator TO esports_operator;
+GRANT client TO esports_client;
 EOF
 ```
 
@@ -164,4 +159,3 @@ python manage.py createsuperuser
 ### 6. Можно проверять
 
 Откройте http://127.0.0.1:8000
-
